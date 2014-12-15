@@ -1,0 +1,13 @@
+{
+  "name": "bridge",
+  "version": "0.0.1",
+  "author": "bruceTse",
+  "description": "a simple html5 game",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0"
+  }
+}

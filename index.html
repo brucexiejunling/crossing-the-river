@@ -4,53 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
     <title>小黄人过河</title>
-    <script src='jquery-1.9.1.min.js'></script>
-    <script src='underscore.min.js'></script>
-    <script src='quintus.js'></script>
-    <script src='quintus.sprites.js'></script>
-    <script src='quintus.scenes.js'></script>
-    <script src='quintus.screen.js'></script>
-    <script src='main.js'></script>
+    <script src='lib/jquery-1.9.1.min.js'></script>
+    <script src='lib/underscore.min.js'></script>
+    <script src='dist/main.js'></script>
     <style>
       body { padding:0px; margin:0px; background: #B1E9FD;}
       canvas { background-color: #5EA2CB; }
-      #mask {
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: none;
-        z-index: 10;
-        background-color: rgba(0,0,0,0.8);
-      }
-
-      #share-tips {
-        width: 34%;
-        height: 22%;
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        background-image: url("images/sprites5.png");
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        background-position: 86% -34%;
-      }
-
-      #return-tips {
-        position: absolute;
-        width: 100%;
-        top: 50%;
-        left: 0;
-        text-align: center;
-        color: #00c09b;
-        font-family: 微软雅黑, Arial;
-        font-size: 18px;
-      }
     </style>
   </head>
   <body>
-    <div id="mask">
-      <div id="share-tips"></div>
-      <div id="return-tips">轻触屏幕返回~</div>
-    </div>
   </body>
 </html>
