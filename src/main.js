@@ -345,12 +345,14 @@ Q.ShareMask = Q.Rectangle.extend({
     function shareHandler() {
       var mask = new Q.ShareMask()
       this.insert(mask)
-      Q.el.on('touchstart mousedown', handler)
+      Q.el.off('touchend mouseup', touchDispatch)
+      Q.el.on('touchend mouseup', handler)
       function handler(event) {
         document.title = "小黄人过河"
         event.preventDefault()
         mask.destroy() 
-        Q.el.off('touchstart mousedown', handler)
+        Q.el.on('touchend mouseup', touchDispatch)
+        Q.el.off('touchend mouseup', handler)
       }
     }
 
