@@ -1,10 +1,10 @@
 $(function() {
 	function setupInputs() {
-	  Q.el.on('touchend mouseup', touchDispatch)
+	  Q.el.on('touchend touchmove mouseup', touchDispatch)
 	  Q.el.on('touchstart mousedown', function() {
       Q.stage().trigger('press-down')
 	  })
-	  Q.el.on('touchend mouseup', function() {
+	  Q.el.on('touchend touchmove mouseup', function() {
       Q.stage().trigger('press-up')
 	  })
 	}
@@ -66,7 +66,7 @@ $(function() {
   }
 
   var BRIDGE_WIDTH = 3, BANK_HEIGHT = 150, MIN_BANK_OFFSET = 80,
-      MIN_BANK_WIDTH = 20, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 300;
+      MIN_BANK_WIDTH = 10, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 300;
 	var Q = window.Q = Quintus().
                     include('Sprites, Scenes, Screen').
                     setup('', {maximize: true, fullScreen: true});
@@ -87,7 +87,7 @@ $(function() {
 
     step: function(dt) {
       var p = this.p
-      if(Q.down && !p.roated) {
+      if(!Q.bankMove && !Q.manMove && Q.down && !p.roated) {
         Q.bridgeScale = true
         p.scaled = true
         p.h += p.speed * dt
@@ -99,7 +99,7 @@ $(function() {
           Q.moveToX = p.rbw + p.rbx
           Q.pass = true
         } else if(p.h <= Q.gap || p.h >= Q.gap + p.rbw) {
-          Q.moveToX = p.lbw + p.lbx + p.h + 40 * 0.7
+          Q.moveToX = p.lbw + p.lbx + p.h + 40 * 0.5
           Q.pass = false
         }
       }
@@ -179,7 +179,7 @@ $(function() {
 
   var manJson = {
     "man": {
-      "sx": 10,"sy":10,"cols":10,"tilew":45,"tileh":58,"frames":10
+      "sx": 0,"sy":0,"cols":10,"tilew":40,"tileh":55,"frames":10
     }
   }
 
@@ -203,13 +203,13 @@ $(function() {
       }
 
       if(Q.bankMove && !Q.manMove) {
-        if(p.x + 40 * 0.7 > MIN_BANK_OFFSET) {
+        if(p.x + 40 * 0.5 > MIN_BANK_OFFSET) {
           p.x -= MOVE_SPEED * dt
         } 
       }      
 
       if(Q.manMove) {
-        if(p.x + 40 * 0.7 < Q.moveToX) {
+        if(p.x + 40 * 0.5 < Q.moveToX && p.x < Q.width) {
           p.x += p.speed * dt
         } else if(Q.pass) {
           Q.manMove = false
@@ -242,6 +242,7 @@ $(function() {
 //   };
 
 //
+
   Q.assets['man.json'] = manJson
 
   Q.load(['sprites.png', 'background.jpg'], function() {
@@ -275,8 +276,8 @@ $(function() {
       stage.insert(bridge)
 
       stage.insert(new Q.Man({
-        x: leftBank.p.w + leftBank.p.x - 40 * 0.7, 
-        y: Q.height - BANK_HEIGHT - 55 * 0.7, 
+        x: leftBank.p.w + leftBank.p.x - 40 * 0.5, 
+        y: Q.height - BANK_HEIGHT - 54 * 0.5, 
         frame: 0
       }));
       
@@ -328,9 +329,9 @@ $(function() {
         images: [
           {
             asset: Q.asset('sprites.png'),
-            sx: 16, sy: 80, sw: 216, sh: 176,
+            sx: 10, sy: 60, sw: 225, sh: 175,
             dx: Q.width / 2 - 216 / 2, dy: 20,
-            dw: 216, dh: 176
+            dw: 225, dh: 175
           }
         ],
       
@@ -338,14 +339,14 @@ $(function() {
           {
             asset: Q.asset('sprites.png'),
             name: 'start',
-            sx: 236, sy: 80, sw: 188, sh: 40,
+            sx: 236, sy: 60, sw: 188, sh: 41,
             dx: Q.width / 2 - 94, dy: 225,
-            dw: 188, dh:  40
+            dw: 188, dh:  41
           },
           {
             asset: Q.asset('sprites.png'),
             name: 'share',
-            sx: 236, sy: 124, sw: 188, sh: 40,
+            sx: 236, sy: 108, sw: 188, sh: 40,
             dx: Q.width / 2 - 94, dy: 285,
             dw: 188, dh:  40
           } 
@@ -382,14 +383,14 @@ $(function() {
           {
             asset: Q.asset('sprites.png'),
             name: 'replay',
-            sx: 236, sy: 172, sw: 188, sh: 40,
+            sx: 236, sy: 152, sw: 188, sh: 40,
             dx: Q.width / 2 - 94, dy: 200,
             dw: 188, dh:  40
           },
           {
             asset: Q.asset('sprites.png'),
             name: 'show',
-            sx: 236, sy: 216, sw: 188, sh: 40,
+            sx: 236, sy: 198, sw: 188, sh: 40,
             dx: Q.width / 2 - 94, dy: 260,
             dw: 188, dh:  40
           } 

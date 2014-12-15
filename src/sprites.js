@@ -30,7 +30,7 @@ Quintus.Sprites = function(Q) {
                     this.fx(frame),this.fy(frame),
                     this.tilew, this.tileh,
                     Math.floor(x),Math.floor(y),
-                    this.tilew * 0.7, this.tileh * 0.7);
+                    this.tilew * 0.5, this.tileh * 0.5);
 
     }
 
