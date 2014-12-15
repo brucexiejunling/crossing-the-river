@@ -53,7 +53,9 @@ $(function() {
 
   var BRIDGE_WIDTH = 3, BANK_HEIGHT = 150, MIN_BANK_OFFSET = 80,
       MIN_BANK_WIDTH = 20, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 400;
-	var Q = window.Q = Quintus().include('Sprites, Scenes, Screen').setup();
+	var Q = window.Q = Quintus().
+                    include('Sprites, Scenes, Screen').
+                    setup('', {maximize: true, fullScreen: true});
   setupInputs()
 
   Q.Bridge = Q.Rectangle.extend({
