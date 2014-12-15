@@ -51,16 +51,19 @@ $(function() {
   	}
   }
 
-  // function showShareMask() {
-  //   $('#mask').css({
-  //     width: window.innerWidth,
-  //     height: window.innerHeight,
-  //   }).on('mouseup touchend', hideShareMask)
-  // }
+  function showShareMask() {
+    $('#mask').css({
+      display: 'block',
+      width: window.innerWidth,
+      height: window.innerHeight,
+    }).on('mouseup touchend', hideShareMask)
+  }
 
-  // function hideShareMask() {
-  //   $('#mask').css('display', 'none').off('mouseup touchend', hideShareMask)
-  // }
+  function hideShareMask(event) {
+    document.title = "小黄人过河"
+    event.preventDefault()
+    $('#mask').css('display', 'none').off('mouseup touchend', hideShareMask)
+  }
 
   var BRIDGE_WIDTH = 3, BANK_HEIGHT = 150, MIN_BANK_OFFSET = 80,
       MIN_BANK_WIDTH = 20, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 300;
@@ -226,28 +229,6 @@ $(function() {
     }
   });
 
-Q.ShareMask = Q.Rectangle.extend({
-  init: function() {
-    this._super({
-      x: 0,
-      y: 0,
-      w: Q.width,
-      h: Q.height,
-      color: "rgba(0,0,0,0.8)"
-    })
-  },
-
-  draw: function(ctx) {
-    ctx = ctx ? ctx : Q.ctx
-    this._super(ctx)
-    ctx.drawImage(Q.asset('sprites5.png'), 426, 80, 124, 100, Q.width - 10 - 124, 10, 124, 100)
-    ctx.fillStyle = "#00c09b"
-    ctx.textAlign = "center"
-    ctx.font = "normal 20px '微软雅黑' Arial"
-    ctx.fillText('轻触屏幕返回~', Q.width / 2, Q.height / 2)
-  }
-})
-
 //
 //   var rnd
 //   rnd.today=new Date();
@@ -342,20 +323,6 @@ Q.ShareMask = Q.Rectangle.extend({
 
     }));
 
-    function shareHandler() {
-      var mask = new Q.ShareMask()
-      this.insert(mask)
-      Q.el.off('touchend mouseup', touchDispatch)
-      Q.el.on('touchend mouseup', handler)
-      function handler(event) {
-        document.title = "小黄人过河"
-        event.preventDefault()
-        mask.destroy() 
-        Q.el.on('touchend mouseup', touchDispatch)
-        Q.el.off('touchend mouseup', handler)
-      }
-    }
-
     Q.scene('start', new Q.Scene(function(stage) {
       var screen = new Q.Screen({
         images: [
@@ -389,7 +356,7 @@ Q.ShareMask = Q.Rectangle.extend({
 
       stage.bind('share', function() {
         document.title = "[小黄人过河]游戏, 想自虐吗, 来挑战吧! 66666"
-        shareHandler.call(this)
+        showShareMask()
       })
       stage.bind('start', function() {
       	Q.stageScene('game')
@@ -436,7 +403,7 @@ Q.ShareMask = Q.Rectangle.extend({
       })
       stage.bind('show', function() {
         document.title = "我在[小黄人过河]游戏中怒砍" + Q.points + "分, 6到没朋友! you can? you up!"
-        shareHandler.call(this)
+        showShareMask()
       })
     }));
 

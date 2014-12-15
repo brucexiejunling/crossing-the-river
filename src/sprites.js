@@ -125,7 +125,6 @@ Quintus.Sprites = function(Q) {
         ctx = Q.ctx
       }
       var p = this.p
-      console.log(p.color)
       ctx.fillStyle = p.color
       ctx.fillRect(p.x, p.y, p.w, p.h)
       this.trigger('draw', ctx)
