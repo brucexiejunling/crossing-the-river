@@ -51,8 +51,19 @@ $(function() {
   	}
   }
 
+  // function showShareMask() {
+  //   $('#mask').css({
+  //     width: window.innerWidth,
+  //     height: window.innerHeight,
+  //   }).on('mouseup touchend', hideShareMask)
+  // }
+
+  // function hideShareMask() {
+  //   $('#mask').css('display', 'none').off('mouseup touchend', hideShareMask)
+  // }
+
   var BRIDGE_WIDTH = 3, BANK_HEIGHT = 150, MIN_BANK_OFFSET = 80,
-      MIN_BANK_WIDTH = 20, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 400;
+      MIN_BANK_WIDTH = 20, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 350;
 	var Q = window.Q = Quintus().
                     include('Sprites, Scenes, Screen').
                     setup('', {maximize: true, fullScreen: true});
@@ -63,7 +74,7 @@ $(function() {
       this._super(_.extend({
         w: BRIDGE_WIDTH,
         y: Q.height - BANK_HEIGHT,
-        speed: 280,
+        speed: 250,
         ang: 0,
         scaled: false,
         roated: false,
@@ -172,7 +183,7 @@ $(function() {
   Q.Man = Q.Sprite.extend({
     init: function(props) {
       this._super(_(props).extend({
-       sheet: 'man', speed: 300, frameCount: 0, z: 10
+       sheet: 'man', speed: 280, frameCount: 0, z: 10
       }));
     },
 
@@ -227,7 +238,6 @@ Q.ShareMask = Q.Rectangle.extend({
   },
 
   draw: function(ctx) {
-    ctx.save()
     ctx = ctx ? ctx : Q.ctx
     this._super(ctx)
     ctx.drawImage(Q.asset('sprites5.png'), 426, 80, 124, 100, Q.width - 10 - 124, 10, 124, 100)
@@ -235,7 +245,6 @@ Q.ShareMask = Q.Rectangle.extend({
     ctx.textAlign = "center"
     ctx.font = "normal 20px '微软雅黑' Arial"
     ctx.fillText('轻触屏幕返回~', Q.width / 2, Q.height / 2)
-    ctx.restore()
   }
 })
 
@@ -333,12 +342,13 @@ Q.ShareMask = Q.Rectangle.extend({
 
     }));
 
-    function shareHandler(event) {
+    function shareHandler() {
       var mask = new Q.ShareMask()
       this.insert(mask)
       Q.el.off('touchend mouseup', touchDispatch)
       Q.el.on('touchend mouseup', handler)
       function handler(event) {
+        document.title = "小黄人过河"
         event.preventDefault()
         mask.destroy() 
         Q.el.off('touchend mouseup', handler)
