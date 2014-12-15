@@ -34,7 +34,7 @@ Quintus.Screen = function(Q) {
 
       ctx.fillStyle = "#fff"
       ctx.textAlign = "center"
-      ctx.font = "bold 30px '微软雅黑' Arial"
+      ctx.font = "bold 32px '微软雅黑' Arial"
       _.each(p.titles, function(title, i) {
         ctx.fillText(title.text, title.x, title.y);
       });

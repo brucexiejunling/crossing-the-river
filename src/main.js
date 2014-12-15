@@ -244,8 +244,8 @@ $(function() {
 //
   Q.assets['man.json'] = manJson
 
-  Q.load(['sprites5.png', 'background.jpg'], function() {
-    Q.compileSheets('sprites5.png', 'man.json')
+  Q.load(['sprites.png', 'background.jpg'], function() {
+    Q.compileSheets('sprites.png', 'man.json')
 
     Q.scene('game', new Q.Scene(function(stage) {
       var leftBank = new Q.Bank({
@@ -327,7 +327,7 @@ $(function() {
       var screen = new Q.Screen({
         images: [
           {
-            asset: Q.asset('sprites5.png'),
+            asset: Q.asset('sprites.png'),
             sx: 16, sy: 80, sw: 216, sh: 176,
             dx: Q.width / 2 - 216 / 2, dy: 20,
             dw: 216, dh: 176
@@ -336,17 +336,17 @@ $(function() {
       
         buttons: [
           {
-            asset: Q.asset('sprites5.png'),
+            asset: Q.asset('sprites.png'),
             name: 'start',
             sx: 236, sy: 80, sw: 188, sh: 40,
-            dx: Q.width / 2 - 94, dy: 210,
+            dx: Q.width / 2 - 94, dy: 225,
             dw: 188, dh:  40
           },
           {
-            asset: Q.asset('sprites5.png'),
+            asset: Q.asset('sprites.png'),
             name: 'share',
             sx: 236, sy: 124, sw: 188, sh: 40,
-            dx: Q.width / 2 - 94, dy: 260,
+            dx: Q.width / 2 - 94, dy: 285,
             dw: 188, dh:  40
           } 
         ]
@@ -380,17 +380,17 @@ $(function() {
  				],
         buttons: [
           {
-            asset: Q.asset('sprites5.png'),
+            asset: Q.asset('sprites.png'),
             name: 'replay',
             sx: 236, sy: 172, sw: 188, sh: 40,
-            dx: Q.width / 2 - 94, dy: 180,
+            dx: Q.width / 2 - 94, dy: 200,
             dw: 188, dh:  40
           },
           {
-            asset: Q.asset('sprites5.png'),
+            asset: Q.asset('sprites.png'),
             name: 'show',
             sx: 236, sy: 216, sw: 188, sh: 40,
-            dx: Q.width / 2 - 94, dy: 230,
+            dx: Q.width / 2 - 94, dy: 260,
             dw: 188, dh:  40
           } 
         ]
