@@ -63,7 +63,7 @@ $(function() {
   // }
 
   var BRIDGE_WIDTH = 3, BANK_HEIGHT = 150, MIN_BANK_OFFSET = 80,
-      MIN_BANK_WIDTH = 20, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 350;
+      MIN_BANK_WIDTH = 20, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 300;
 	var Q = window.Q = Quintus().
                     include('Sprites, Scenes, Screen').
                     setup('', {maximize: true, fullScreen: true});
@@ -74,7 +74,7 @@ $(function() {
       this._super(_.extend({
         w: BRIDGE_WIDTH,
         y: Q.height - BANK_HEIGHT,
-        speed: 250,
+        speed: 150,
         ang: 0,
         scaled: false,
         roated: false,
@@ -183,7 +183,7 @@ $(function() {
   Q.Man = Q.Sprite.extend({
     init: function(props) {
       this._super(_(props).extend({
-       sheet: 'man', speed: 280, frameCount: 0, z: 10
+       sheet: 'man', speed: 200, frameCount: 0, z: 10
       }));
     },
 
@@ -345,14 +345,12 @@ Q.ShareMask = Q.Rectangle.extend({
     function shareHandler() {
       var mask = new Q.ShareMask()
       this.insert(mask)
-      Q.el.off('touchend mouseup', touchDispatch)
-      Q.el.on('touchend mouseup', handler)
+      Q.el.on('touchstart mousedown', handler)
       function handler(event) {
         document.title = "小黄人过河"
         event.preventDefault()
         mask.destroy() 
-        Q.el.off('touchend mouseup', handler)
-        Q.el.on('touchend mouseup', touchDispatch)
+        Q.el.off('touchstart mousedown', handler)
       }
     }
 
