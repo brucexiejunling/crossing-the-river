@@ -109,7 +109,7 @@ $(function() {
         // console.log('p.rbw', p.rbw)
         if(p.h > Q.gap && p.h < Q.gap + p.rbw) {
           Q.moveToX = p.rbw + p.rbx
-          Q.pass = true
+
         } else if(p.h <= Q.gap || p.h >= Q.gap + p.rbw) {
           Q.moveToX = p.lbw + p.lbx + p.h + 40 * 0.5
           Q.pass = false
@@ -198,7 +198,7 @@ $(function() {
   Q.Man = Q.Sprite.extend({
     init: function(props) {
       this._super(_(props).extend({
-       sheet: 'man', speed: 400, frameCount: 0, z: 10
+       sheet: 'man', speed: 300, frameCount: 0, z: 10
       }));
     },
 
