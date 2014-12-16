@@ -55,7 +55,7 @@ $(function() {
   }
 
   function showShareMask() {
-    $('#share-text').text(document.title)
+    $('#share-text').text('" ' + document.title + ' "')
     $('#mask').css({
       display: 'block',
       width: window.innerWidth,
@@ -367,7 +367,7 @@ $(function() {
       stage.insert(screen)
 
       stage.bind('share', function() {
-        document.title = " [小黄人过河]游戏, 想自虐吗, 来挑战吧! 66666 "
+        document.title = "[小黄人过河]游戏, 想自虐吗, 来挑战吧! 66666"
         showShareMask()
       })
       stage.bind('start', function() {
@@ -414,7 +414,7 @@ $(function() {
       	Q.stageScene('game')
       })
       stage.bind('show', function() {
-        document.title = " 我在[小黄人过河]游戏中怒砍" + Q.points + "分, 6到没朋友! you can? you up! "
+        document.title = "我在[小黄人过河]游戏中怒砍" + Q.points + "分, 6到没朋友! you can? you up!"
         showShareMask()
       })
     }));
