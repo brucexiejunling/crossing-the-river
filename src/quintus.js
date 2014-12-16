@@ -144,7 +144,9 @@ var Quintus = function(opts) {
         while(dt > 16.7) {
           dt -= acc
           callback.call(Q, acc / 1000);  
-        }
+        } 
+      }else {
+        callback.call(Q, dt / 1000)
       }
       Q.lastGameLoopFrame = now;
     };
