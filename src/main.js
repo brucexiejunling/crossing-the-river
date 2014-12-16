@@ -72,7 +72,7 @@ $(function() {
   }
 
   var BRIDGE_WIDTH = 3, BANK_HEIGHT = 150, MIN_BANK_OFFSET = 80,
-      MIN_BANK_WIDTH = 10, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 300;
+      MIN_BANK_WIDTH = 10, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 500;
 	var Q = window.Q = Quintus().
                     include('Sprites, Scenes, Screen').
                     setup('', {maximize: true, fullScreen: true});
@@ -80,6 +80,7 @@ $(function() {
 
   Q.points = 0;
 
+  var lastTime = new Date() .getTime()
   Q.Bridge = Q.Rectangle.extend({
     init: function(props) {
       this._super(_.extend({
@@ -103,9 +104,9 @@ $(function() {
       } else if(Q.up && p.ang == 90 && !p.moved) {
         Q.manMove = true
         p.moved = true
-        console.log('p.h', p.h)
-        console.log('Q.gap', Q.gap)
-        console.log('p.rbw', p.rbw)
+        // console.log('p.h', p.h)
+        // console.log('Q.gap', Q.gap)
+        // console.log('p.rbw', p.rbw)
         if(p.h > Q.gap && p.h < Q.gap + p.rbw) {
           Q.moveToX = p.rbw + p.rbx
           Q.pass = true
@@ -197,7 +198,7 @@ $(function() {
   Q.Man = Q.Sprite.extend({
     init: function(props) {
       this._super(_(props).extend({
-       sheet: 'man', speed: 200, frameCount: 0, z: 10
+       sheet: 'man', speed: 400, frameCount: 0, z: 10
       }));
     },
 
