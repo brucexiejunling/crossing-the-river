@@ -2,9 +2,11 @@ $(function() {
 	function setupInputs() {
 	  Q.el.on('touchend touchmove mouseup', touchDispatch)
 	  Q.el.on('touchstart mousedown', function() {
+      // event.preventDefault()
       Q.stage().trigger('press-down')
 	  })
 	  Q.el.on('touchend touchmove mouseup', function() {
+      // event.preventDefault()
       Q.stage().trigger('press-up')
 	  })
 	}
@@ -22,6 +24,7 @@ $(function() {
   }
 
   function touchDispatch(event) {
+    // event.preventDefault()
   	var hasTouch = !!('ontouch' in window)
   	if(hasTouch) {
 	    for(i=0,len=event.touches.length;i<len;i++) {
@@ -52,16 +55,19 @@ $(function() {
   }
 
   function showShareMask() {
+    $('#share-text').text('" 我在[小黄人过河]游戏中怒砍' + Q.points + '分, 6到没朋友! you can? you up! "')
     $('#mask').css({
       display: 'block',
       width: window.innerWidth,
       height: window.innerHeight,
-    }).on('mouseup touchend', hideShareMask)
+    })
+
+    $('#return').on('mouseup touchend', hideShareMask)
   }
 
   function hideShareMask(event) {
-    document.title = "小黄人过河"
     event.preventDefault()
+    document.title = "小黄人过河"
     $('#mask').css('display', 'none').off('mouseup touchend', hideShareMask)
   }
 
@@ -71,6 +77,8 @@ $(function() {
                     include('Sprites, Scenes, Screen').
                     setup('', {maximize: true, fullScreen: true});
   setupInputs()
+
+  Q.points = 0;
 
   Q.Bridge = Q.Rectangle.extend({
     init: function(props) {
@@ -95,6 +103,9 @@ $(function() {
       } else if(Q.up && p.ang == 90 && !p.moved) {
         Q.manMove = true
         p.moved = true
+        console.log('p.h', p.h)
+        console.log('Q.gap', Q.gap)
+        console.log('p.rbw', p.rbw)
         if(p.h > Q.gap && p.h < Q.gap + p.rbw) {
           Q.moveToX = p.rbw + p.rbx
           Q.pass = true

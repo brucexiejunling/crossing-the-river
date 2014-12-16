@@ -6,7 +6,7 @@
     <title>小黄人过河</title>
     <script src='lib/jquery-1.9.1.min.js'></script>
     <script src='lib/underscore.min.js'></script>
-    <script src='dist/main.js'></script>
+    <script type="text/javascript" src="dist/main.js"></script>
     <style>
       body { padding:0px; margin:0px; background: #B1E9FD;}
       canvas { background-color: #5EA2CB; }
@@ -16,35 +16,59 @@
         top: 0;
         display: none;
         z-index: 10;
-        background-color: rgba(0,0,0,0.8);
+        background-color: rgba(0,0,0,0.9);
       }
 
       #share-tips {
         width: 235px;
         height: 182px;
         position: absolute;
-        top: 10px;
-        right: 20px;
+        top: 0;
+        right: 0;
         background-image: url("images/share_text.png");
         background-repeat: no-repeat;
       }
 
-      #return-tips {
+      #share-text {
+        position: absolute;
+        top: 190px;
+        left: 0;
+        color: #bbb;
+        padding-left: 30px;
+        padding-right: 30px;
+        text-align: center;
+        font-family: 微软雅黑, Arial;
+        font-size: 15px;
+      }
+      #return-wrapper {
         position: absolute;
         width: 100%;
-        top: 50%;
+        height: 80px;
+        top: 70%;
         left: 0;
+      }
+      #return {
+        margin: auto;
+        padding: 2px;
+        width: 35%;
+        border: solid 1px;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
         text-align: center;
         color: #00c09b;
         font-family: 微软雅黑, Arial;
-        font-size: 18px;
+        font-size: 20px;
       }
     </style>
   </head>
   <body>
     <div id="mask">
       <div id="share-tips"></div>
-      <div id="return-tips">轻触屏幕返回~</div>
+      <div id="share-text"></div>
+      <div id="return-wrapper"><div id="return">返 回</div></div>
     </div>
   </body>
 </html>
