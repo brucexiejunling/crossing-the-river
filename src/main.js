@@ -79,29 +79,46 @@ $(function() {
   setupInputs()
 
   Q.points = 0;
+  Q.delay = 0.2;
 
-  var lastTime = new Date() .getTime()
   Q.Bridge = Q.Rectangle.extend({
     init: function(props) {
       this._super(_.extend({
         w: BRIDGE_WIDTH,
         y: Q.height - BANK_HEIGHT,
-        speed: 150,
+        speed: 200,
         ang: 0,
+        waitTime: 0,
+        scaling: false,
         scaled: false,
-        roated: false,
+        rotating: false,
+        rotated: false,
         moved: false,
       }, props || {}));
     }, 
 
     step: function(dt) {
       var p = this.p
-      if(!Q.bankMove && !Q.manMove && Q.down && !p.roated) {
+    
+      if(!Q.bankMove && !Q.manMove && Q.down && !p.scaled && !p.rotated) {
         Q.bridgeScale = true
-        p.scaled = true
+        p.scaling = true
         p.h += p.speed * dt
         p.y -= p.speed * dt
-      } else if(Q.up && p.ang == 90 && !p.moved) {
+      } 
+
+      if(Q.up && p.scaling) {
+        p.scaling = false
+        p.scaled = true
+      }
+
+      if(Q.up && p.scaled) {
+        if(p.waitTime < Q.delay) {
+          p.waitTime += dt
+        }
+      }
+      
+      if(Q.up && p.rotated && !p.moved) {
         Q.manMove = true
         p.moved = true
         // console.log('p.h', p.h)
@@ -109,16 +126,16 @@ $(function() {
         // console.log('p.rbw', p.rbw)
         if(p.h > Q.gap && p.h < Q.gap + p.rbw) {
           Q.moveToX = p.rbw + p.rbx
-
+          Q.pass = true
         } else if(p.h <= Q.gap || p.h >= Q.gap + p.rbw) {
           Q.moveToX = p.lbw + p.lbx + p.h + 40 * 0.5
           Q.pass = false
         }
       }
 
-      if(Q.bankMove && p.ang === 90 && p.h + p.x + Q.height - BANK_HEIGHT - p.y > 0) {
+      if(Q.bankMove && p.rotated && p.h + p.x + Q.height - BANK_HEIGHT - p.y > 0) {
         p.y += MOVE_SPEED * dt
-      } else if(Q.bankMove && p.ang === 90){
+      } else if(Q.bankMove && p.rotated){
         this.destroy()
       }
 
@@ -129,26 +146,32 @@ $(function() {
         ctx = Q.ctx
       }
       var p = this.p
-      if(Q.up && p.scaled && p.ang < 90) {
-        p.roated = true
-        p.ang += 5
-        ctx.save()
-        ctx.translate(p.x + BRIDGE_WIDTH , Q.height - BANK_HEIGHT)
-        ctx.rotate(p.ang*Math.PI/180)
-        ctx.translate(-p.x - BRIDGE_WIDTH, BANK_HEIGHT - Q.height)
-        ctx.fillStyle = p.color
-        ctx.fillRect(p.x, p.y, p.w, p.h)
-        ctx.restore()
-      }else if(Q.down && !p.roated){
+      if(p.waitTime >= Q.delay) {
+        if(Q.up && p.scaled && !p.rotated) {
+          p.rotating = true
+          p.ang += 5
+          ctx.save()
+          ctx.translate(p.x + BRIDGE_WIDTH , Q.height - BANK_HEIGHT)
+          ctx.rotate(p.ang*Math.PI/180)
+          ctx.translate(-p.x - BRIDGE_WIDTH, BANK_HEIGHT - Q.height)
+          ctx.fillStyle = p.color
+          ctx.fillRect(p.x, p.y, p.w, p.h)
+          ctx.restore()
+        }
+
+        if(p.ang === 90) {
+          p.rotated = true
+          p.rotating = false
+          ctx.save()
+          ctx.translate(p.x + BRIDGE_WIDTH  - BRIDGE_WIDTH / 3, Q.height - BANK_HEIGHT + BRIDGE_WIDTH / 3)
+          ctx.rotate(Math.PI / 2)
+          ctx.translate(-p.x - BRIDGE_WIDTH + BRIDGE_WIDTH / 3, BANK_HEIGHT - Q.height - BRIDGE_WIDTH / 3)
+          ctx.fillStyle = p.color
+          ctx.fillRect(p.x, p.y, p.w, p.h)
+          ctx.restore()
+        }
+      } else {
         this._super(ctx)
-      } else if(p.ang == 90) {
-        ctx.save()
-        ctx.translate(p.x + BRIDGE_WIDTH  - BRIDGE_WIDTH / 3, Q.height - BANK_HEIGHT + BRIDGE_WIDTH / 3)
-        ctx.rotate(Math.PI / 2)
-        ctx.translate(-p.x - BRIDGE_WIDTH + BRIDGE_WIDTH / 3, BANK_HEIGHT - Q.height - BRIDGE_WIDTH / 3)
-        ctx.fillStyle = p.color
-        ctx.fillRect(p.x, p.y, p.w, p.h)
-        ctx.restore()
       }
     }
   });
@@ -198,7 +221,8 @@ $(function() {
   Q.Man = Q.Sprite.extend({
     init: function(props) {
       this._super(_(props).extend({
-       sheet: 'man', speed: 300, frameCount: 0, z: 10
+       sheet: 'man', speed: 280, frameCount: 0, z: 10,
+       waitTime: 0
       }));
     },
 
@@ -209,9 +233,6 @@ $(function() {
       } else if(!Q.manMove) {
         p.frameCount = (p.frameCount + 1) % 13
         p.frame = Math.floor(p.frameCount / 4)
-      } else {
-        p.frameCount = (p.frameCount + 1) % 21
-        p.frame = 5 + Math.floor(p.frameCount / 4)
       }
 
       if(Q.bankMove && !Q.manMove) {
@@ -221,21 +242,29 @@ $(function() {
       }      
 
       if(Q.manMove) {
-        if(p.x + 40 * 0.5 < Q.moveToX && p.x < Q.width) {
-          p.x += p.speed * dt
-        } else if(Q.pass) {
-          Q.manMove = false
-          Q.bankMove = true
-          Q.points += 1
-          Q.stage().trigger('build-bank')
-        } else {
-          if(p.y < Q.height) {
-            p.y += 800 * dt
-          } else {
+        if(p.waitTime >= Q.delay) {
+          p.frameCount = (p.frameCount + 1) % 21
+          p.frame = 5 + Math.floor(p.frameCount / 4)
+
+          if(p.x + 40 * 0.5 < Q.moveToX && p.x < Q.width) {
+            p.x += p.speed * dt
+          } else if(Q.pass) {
+            p.waitTime = 0
             Q.manMove = false
-            Q.bankMove = false
-            Q.stageScene('over')
+            Q.bankMove = true
+            Q.points += 1
+            Q.stage().trigger('build-bank')
+          } else {
+            if(p.y < Q.height) {
+              p.y += 800 * dt
+            } else {
+              Q.manMove = false
+              Q.bankMove = false
+              Q.stageScene('over')
+            }
           }
+        } else {
+          p.waitTime += dt
         }
       }
     }
