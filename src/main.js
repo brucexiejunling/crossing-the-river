@@ -1,14 +1,14 @@
 $(function() {
 	function setupInputs() {
-	  Q.el.on('touchend touchmove mouseup', touchDispatch)
-	  Q.el.on('touchstart mousedown', function() {
-      // event.preventDefault()
+    Q.el.on('touchstart mousedown', function() {
       Q.stage().trigger('press-down')
-	  })
-	  Q.el.on('touchend touchmove mouseup', function() {
-      // event.preventDefault()
+      event.preventDefault()
+    })
+	  Q.el.on('touchend touchcancel mouseup', function(event) {
       Q.stage().trigger('press-up')
-	  })
+      touchDispatch(event.originalEvent)
+      event.preventDefault()
+    })
 	}
 
 	function touchLocation(touch) {
@@ -24,11 +24,11 @@ $(function() {
   }
 
   function touchDispatch(event) {
-    // event.preventDefault()
-  	var hasTouch = !!('ontouch' in window)
+  	var hasTouch = !!('ontouchstart' in window)
   	if(hasTouch) {
-	    for(i=0,len=event.touches.length;i<len;i++) {
-	      var tch = event.touches[i];
+      touches = event.changedTouches
+	    for(i=0,len=touches.length;i<len;i++) {
+	      var tch = touches[i];
 	      var pos = touchLocation(tch)
 	      var canBreak = false
 	      _.each(Q.buttons, function(btn, index) {
