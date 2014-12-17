@@ -71,6 +71,14 @@ $(function() {
     $('#mask').css('display', 'none').off('mouseup touchend', hideShareMask)
   }
 
+  function gameOver() {
+    Q.el.addClass('bounce')
+    setTimeout(function() {
+      Q.stageScene('over')
+      Q.el.removeClass('bounce')
+    }, 1200)
+  }
+
   var BRIDGE_WIDTH = 3, BANK_HEIGHT = 150, MIN_BANK_OFFSET = 80,
       MIN_BANK_WIDTH = 10, MAX_BANK_WIDTH = 120, MIN_GAP = 15, MOVE_SPEED = 500;
 	var Q = window.Q = Quintus().
@@ -86,7 +94,8 @@ $(function() {
       this._super(_.extend({
         w: BRIDGE_WIDTH,
         y: Q.height - BANK_HEIGHT,
-        speed: 200,
+        z: 1,
+        speed: 250,
         ang: 0,
         waitTime: 0,
         scaling: false,
@@ -121,20 +130,18 @@ $(function() {
       if(Q.up && p.rotated && !p.moved) {
         Q.manMove = true
         p.moved = true
-        // console.log('p.h', p.h)
-        // console.log('Q.gap', Q.gap)
-        // console.log('p.rbw', p.rbw)
-        if(p.h > Q.gap && p.h < Q.gap + p.rbw) {
-          Q.moveToX = p.rbw + p.rbx
+        Q.pass = false
+        if(p.w + p.x > p.rBank.p.x && p.w + p.x < p.rBank.p.w + p.rBank.p.x) {
+          Q.moveToX = p.rBank.p.w + p.rBank.p.x
           Q.pass = true
-        } else if(p.h <= Q.gap || p.h >= Q.gap + p.rbw) {
-          Q.moveToX = p.lbw + p.lbx + p.h + 40 * 0.5
+        } else if(p.w + p.x <= p.rBank.p.x || p.w + p.x >= p.rBank.p.w + p.rBank.p.x) {
+          Q.moveToX = p.lBank.p.w + p.lBank.p.x + p.w + 40 * 0.5
           Q.pass = false
         }
       }
 
-      if(Q.bankMove && p.rotated && p.h + p.x + Q.height - BANK_HEIGHT - p.y > 0) {
-        p.y += MOVE_SPEED * dt
+      if(Q.bankMove && p.rotated && p.x + p.w > 0) {
+        p.x -= MOVE_SPEED * dt
       } else if(Q.bankMove && p.rotated){
         this.destroy()
       }
@@ -159,16 +166,17 @@ $(function() {
           ctx.restore()
         }
 
-        if(p.ang === 90) {
+        if(p.ang === 90 && !p.rotated) {
           p.rotated = true
           p.rotating = false
-          ctx.save()
-          ctx.translate(p.x + BRIDGE_WIDTH  - BRIDGE_WIDTH / 3, Q.height - BANK_HEIGHT + BRIDGE_WIDTH / 3)
-          ctx.rotate(Math.PI / 2)
-          ctx.translate(-p.x - BRIDGE_WIDTH + BRIDGE_WIDTH / 3, BANK_HEIGHT - Q.height - BRIDGE_WIDTH / 3)
-          ctx.fillStyle = p.color
-          ctx.fillRect(p.x, p.y, p.w, p.h)
-          ctx.restore()
+          var temp = p.h
+          p.x = p.lBank.p.x + p.lBank.p.w
+          p.h = p.w
+          p.w = temp
+          p.y = Q.height - BANK_HEIGHT - p.h / 3
+          this._super(ctx)
+        } else if(p.rotated) {
+          this._super(ctx)
         }
       } else {
         this._super(ctx)
@@ -181,6 +189,7 @@ $(function() {
       this._super(_.extend({
         x: 0,
         y: Q.height - BANK_HEIGHT,
+        z: 2,
         w: MIN_BANK_WIDTH,
         h: BANK_HEIGHT,
         type: ''
@@ -221,7 +230,7 @@ $(function() {
   Q.Man = Q.Sprite.extend({
     init: function(props) {
       this._super(_(props).extend({
-       sheet: 'man', speed: 280, frameCount: 0, z: 10,
+       sheet: 'man', speed: 280, frameCount: 0, z: 3,
        waitTime: 0
       }));
     },
@@ -260,7 +269,7 @@ $(function() {
             } else {
               Q.manMove = false
               Q.bankMove = false
-              Q.stageScene('over')
+              gameOver()
             }
           }
         } else {
@@ -306,10 +315,8 @@ $(function() {
 
       var bridge = new Q.Bridge({
         x: leftBank.p.w + leftBank.p.x - BRIDGE_WIDTH, 
-        lbw: leftBank.p.w, 
-        lbx: leftBank.p.x, 
-        rbw: rightBank.p.w,
-        rbx: rightBank.p.x
+        lBank: leftBank,
+        rBank: rightBank
       });
 
       stage.insert(leftBank)
@@ -344,10 +351,8 @@ $(function() {
         
         bridge = new Q.Bridge({
           x: leftBank.p.w + leftBank.p.x - BRIDGE_WIDTH,
-          lbw: leftBank.p.w,
-          lbx: leftBank.p.x,
-          rbw: rightBank.p.w,
-          rbx: rightBank.p.x
+          lBank: leftBank,
+          rBank: rightBank
         });
 
         stage.insert(bridge)

@@ -11,8 +11,146 @@
     <script src='lib/underscore.min.js'></script>
     <script type="text/javascript" src="dist/main.js"></script>
     <style>
-      body { padding:0px; margin:0px; background: #B1E9FD;}
-      canvas { background-color: #5EA2CB; }
+      @-webkit-keyframes bounce {
+        0% {
+        -webkit-transform:translateY(-2%);
+        }
+        5% {
+          -webkit-transform:translateY(-1%);
+        }
+        15% {
+          -webkit-transform:translateY(-2%);
+        }
+        20% {
+          -webkit-transform:translateY(0);
+        }
+        30% {
+          -webkit-transform:translateY(-1%);
+        }
+        35% {
+          -webkit-transform:translateY(0);
+        }
+        100% {
+          -webkit-transform:translateY(0);
+        }
+      }
+
+      /* Mozilla Firefox 15 below */
+      @-moz-keyframes bounce {
+        0% {
+          -moz-transform:translateY(-2%);
+        }
+        5% {
+          -moz-transform:translateY(-1%);
+        }
+        15% {
+          -moz-transform:translateY(-2%);
+        }
+        20% {
+          -moz-transform:translateY(0);
+        }
+        30% {
+          -moz-transform:translateY(-1%);
+        }
+        35% {
+          -moz-transform:translateY(0);
+        }
+        100% {
+          -moz-transform:translateY(0);
+        }
+      }
+
+      /* Opera 12.0 */
+      @-o-keyframes bounce {
+        0% {
+          -o-transform:translateY(-2%);
+        }
+        5% {
+          -o-transform:translateY(-1%);
+        }
+        15% {
+          -o-transform:translateY(-2%);
+        }
+        20% {
+          -o-transform:translateY(0);
+        }
+        30% {
+          -o-transform:translateY(-1%);
+        }
+        35% {
+          -o-transform:translateY(0);
+        }
+        100% {
+          -o-transform:translateY(0);
+        }
+      }
+
+      @-ms-keyframes bounce {
+        0% {
+          -ms-transform:translateY(-2%);
+        }
+        5% {
+          -ms-transform:translateY(-1%);
+        }
+        15% {
+          -ms-transform:translateY(-2%);
+        }
+        20% {
+          -ms-transform:translateY(0);
+        }
+        30% {
+          -ms-transform:translateY(-1%);
+        }
+        35% {
+          -ms-transform:translateY(0);
+        }
+        100% {
+          -ms-transform:translateY(0);
+        }
+      }
+
+      /* W3, Opera 12+, Firefox 16+ */
+      @keyframes bounce {
+        0% {
+          transform:translateY(-2%);
+        }
+        5% {
+          transform:translateY(-1%);
+        }
+        15% {
+          transform:translateY(-2%);
+        }
+        20% {
+          transform:translateY(0);
+        }
+        30% {
+          transform:translateY(-1%);
+        }
+        35% {
+          transform:translateY(0);
+        }
+        100% {
+          transform:translateY(0);
+        }
+      }
+
+      .bounce {
+          -webkit-animation: bounce 800ms ease-out;
+          -moz-animation: bounce 800ms ease-out;
+          -o-animation: bounce 800ms ease-out;
+          -ms-animation: bounce 800ms ease-out;
+          animation: bounce 800ms ease-out;
+      }
+      body { 
+        padding:0px; 
+        margin:0px; 
+        background: 
+        #B1E9FD;
+      }
+      canvas { 
+        display: inline-block;
+        background-color: #5EA2CB; 
+      }
       #mask {
         position: absolute;
         left: 0;
