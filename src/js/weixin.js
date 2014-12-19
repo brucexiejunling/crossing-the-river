@@ -1,5 +1,6 @@
+// http://1.brucetse.sinaapp.com/favicon.ico
 window.WeiXin = {
-	imgUrl: 'http://brucexiejunling.github.io/crossing-the-river/favicon.ico',
+	imgUrl: 'http://1.brucetse.sinaapp.com/favicon.ico',
 	lineLink: location.href,
 	shareTitle: "[小黄人过河游戏], 想知道你有多6吗? 想自虐吗? 来挑战吧!",
 	appid: ''
