@@ -98,7 +98,7 @@ var Quintus = function(opts) {
   // Some base options to be filled in later
   Q.options = {
     imagePath: "images/",
-    audioPath: "audio/",
+    audioPath: "audios/",
     dataPath:  "data/",
     audioSupported: [ 'mp3','ogg' ],
     sound: true 

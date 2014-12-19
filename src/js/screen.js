@@ -26,15 +26,22 @@ Quintus.Screen = function(Q) {
         ctx = Q.ctx
       }
 
+      // statement
+      var statement = "Author: bruceTse. Inspired by [Stick Hero]"
+      ctx.fillStyle = "#444"
+      ctx.textAlign = "center"
+      ctx.font = "normal 14px '微软雅黑' Arial"
+      ctx.fillText(statement, Q.width / 2, Q.height - 10)
+
       var p = this.p
       _.each(p.images, function(img, i) {
         ctx.drawImage(img.asset, img.sx, img.sy, img.sw, img.sh,
                       img.dx, img.dy, img.dw, img.dh);
       });
 
-      ctx.fillStyle = "#fff"
+      ctx.fillStyle = '#000'
+      ctx.font = "bold 40px '微软雅黑' Arial"
       ctx.textAlign = "center"
-      ctx.font = "bold 35px '微软雅黑' Arial"
       _.each(p.titles, function(title, i) {
         ctx.fillText(title.text, title.x, title.y);
       });

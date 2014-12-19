@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 				files: [
 					{
 	          expand: true, 
-	          cwd: 'src/',   
+	          cwd: 'src/js/',   
 	          src: ['*.js'],
 	          dest: 'dist/',  
 	          ext: '.min.js',
@@ -22,15 +22,23 @@ module.exports = function(grunt) {
 
 		concat: {
 			dist: {
-				src: ['dist/quintus.min.js', 'dist/sprites.min.js', 'dist/scenes.min.js', 'dist/screen.min.js', 'dist/main.min.js'],
+				src: ['dist/weixin.min.js', 'dist/quintus.min.js', 'dist/sprites.min.js', 'dist/scenes.min.js', 'dist/screen.min.js', 'dist/main.min.js'],
 				dest: 'dist/main.js'
 			}
+		},
+
+		cssmin: {
+			minify: {
+		    src: ['src/css/style.css'],
+		    dest: 'dist/style.css',
+  		}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-	grunt.registerTask('default', ['clean:init', 'uglify', 'concat', 'clean:dist']);
+	grunt.registerTask('default', ['clean:init', 'uglify', 'concat', 'cssmin', 'clean:dist']);
 };

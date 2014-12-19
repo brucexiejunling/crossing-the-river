@@ -148,7 +148,8 @@ Quintus.Scenes = function(Q) {
     }
 
     // draw background
-    Q.ctx.drawImage(Q.asset('background.jpg'), 0, 0, Q.asset('background.jpg').width, Q.asset('background.jpg').height, 0, 0, Q.width, Q.height)       
+    var bg = Q.backgrounds[Q.bgIndex]
+    Q.ctx.drawImage(Q.asset('background.jpg'), bg.x, bg.y, bg.w, bg.h, 0, 0, Q.width, Q.height)       
 
     for(var i =0,len=Q.stages.length;i<len;i++) {
       Q.activeStage = i;

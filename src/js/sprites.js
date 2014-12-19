@@ -7,8 +7,8 @@ Quintus.Sprites = function(Q) {
         asset: asset,
         w: Q.asset(asset).width,
         h: Q.asset(asset).height,
-        tilew: 64,
-        tileh: 64,
+        tilew: 40,
+        tileh: 55,
         sx: 0,
         sy: 0
         },options);
