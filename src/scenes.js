@@ -157,7 +157,8 @@ Quintus.Scenes = function(Q) {
       bgw = bgh * Q.width / Q.height
     }
 
-    Q.ctx.drawImage(Q.asset('background.jpg'), bg.x + bg.w - bgw, bg.y + bg.h - bgh, bgw, bgh, 0, 0, Q.width, Q.height)       
+    console.log(bgw, bgh)
+    Q.ctx.drawImage(Q.asset('background.jpg'), bg.w - bgw, bg.h - bgh, bgw, bgh, 0, 0, Q.width, Q.height)       
 
     for(var i =0,len=Q.stages.length;i<len;i++) {
       Q.activeStage = i;

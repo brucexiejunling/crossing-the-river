@@ -357,14 +357,14 @@ $(function() {
     var flag = false, $body = $('body')
     Q.backgrounds = [
       {x: 0, y: 0, w: 400, h: 535, style: '#3D89FD'},
-      {x: 405, y: 0, w: 400, h: 535, style: '#61D5FF'},
+      {x: 405, y: 0, w: 400, h: 535, style: '#C7F0FF'},
     ]
     Q.bgIndex = 1 
 
     Q.compileSheets('sprites.png', 'man.json')
 
     Q.scene('game', new Q.Scene(function(stage) {
-      // 随机设置游戏背景
+      // 设置游戏背景
       if(flag) {
         Q.bgIndex = (Q.bgIndex + 1) % 2
         $body.css('background', Q.backgrounds[Q.bgIndex].style)

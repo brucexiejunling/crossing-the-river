@@ -522,6 +522,7 @@ var Quintus = function(opts) {
     if(progressCallback) {
       progressCallback(assetsRemaining, assetsTotal)
     }
+
     // Closure'd per-asset callback gets called
     // each time an asset is successfully loadded
     var loadedCallback = function(key,obj) {
