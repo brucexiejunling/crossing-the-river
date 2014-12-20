@@ -344,10 +344,6 @@ var Quintus = function(opts) {
     
     }
 
-    if(options.fullScreen && touchDevice) {
-      Q.setFullScreen(document.documentElement)
-    }
-
     Q.wrapper = Q.el
                  .wrap("<div id='" + id + "_container'/>")
                  .parent()
@@ -373,18 +369,6 @@ var Quintus = function(opts) {
 
     return Q;
   };
-
-  Q.setFullScreen = function (element) {
-    if(element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if(element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if(element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    } else if(element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    }
-  }
 
   Q.clear = function() {
     Q.ctx.clearRect(0,0,Q.el[0].width,Q.el[0].height);
@@ -518,7 +502,7 @@ var Quintus = function(opts) {
     // Find the # of assets we're loading
     var assetsTotal = _(assetObj).keys().length,
         assetsRemaining = assetsTotal;
-
+1
     if(progressCallback) {
       progressCallback(assetsRemaining, assetsTotal)
     }

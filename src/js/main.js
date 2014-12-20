@@ -83,7 +83,7 @@ $(function() {
       MIN_BANK_WIDTH = 10, MAX_BANK_WIDTH = 90, MIN_GAP = 15, MOVE_SPEED = 500;
 	var Q = window.Q = Quintus().
                     include('Sprites, Scenes, Screen').
-                    setup('', {maximize: true, fullScreen: true});
+                    setup('', {maximize: true});
 
   var bankWidths = {
     's': [10, 15, 20, 25],
