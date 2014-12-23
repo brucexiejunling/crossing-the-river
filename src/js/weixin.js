@@ -3,11 +3,16 @@
 window.WeiXin = {
 	imgUrl: 'http://brucexiejunling.github.io/crossing-the-river/favicon.ico',
 	lineLink: location.href,
-	shareTitle: "[小黄人过河游戏], 想知道你有多6吗? 想自虐吗? 来挑战吧!",
+	shareTitle: "[Banana版小黄人过河]重磅来袭! 更有趣更刺激! 原谅我不羁放纵爱自虐~",
 	appid: ''
 }
 
 function shareFriend() {
+  if(Q.currentScene === 'over') {
+    WeiXin.shareTitle = '我在[Banana版小黄人过河]游戏中怒砍' + Q.points + '分! 6到没朋友! 不服来战!'
+  } else {
+    WeiXin.shareTitle = "[Banana版小黄人过河]重磅来袭! 更有趣更刺激! 原谅我不羁放纵爱自虐~"
+  }
   WeixinJSBridge.invoke('sendAppMessage',{
     "appid": WeiXin.appid,
     "img_url": WeiXin.imgUrl,
@@ -15,7 +20,7 @@ function shareFriend() {
     "img_height": "64",
     "link": WeiXin.lineLink,
     "desc": WeiXin.shareTitle,
-    "title": '小黄人过河'
+    "title": 'Banana版小黄人过河'
 
   }, function(res) {
 
@@ -23,6 +28,12 @@ function shareFriend() {
 }
 
 function shareTimeline() {
+  if(Q.currentScene === 'over') {
+    WeiXin.shareTitle = '我在[Banana版小黄人过河]游戏中怒砍' + Q.points + '分! 6到没朋友! 不服来战!'
+  } else {
+    WeiXin.shareTitle = "[Banana版小黄人过河]重磅来袭! 更有趣更刺激! 原谅我不羁放纵爱自虐~"
+  }
+
   WeixinJSBridge.invoke('shareTimeline',{
     "img_url": WeiXin.imgUrl,
     "img_width": "64",
@@ -36,8 +47,13 @@ function shareTimeline() {
 }
 
 function shareWeibo() {
+  if(Q.currentScene === 'over') {
+    WeiXin.shareTitle = '我在[Banana版小黄人过河]游戏中怒砍' + Q.points + '分! 6到没朋友! 不服来战!'
+  } else {
+    WeiXin.shareTitle = "[Banana版小黄人过河]重磅来袭! 更有趣更刺激! 原谅我不羁放纵爱自虐~"
+  }
   WeixinJSBridge.invoke('shareWeibo',{
-    "content": WeiXin.descContent,
+    "content": WeiXin.shareTitle,
     "url": WeiXin.lineLink,
   }, function(res) {
 
