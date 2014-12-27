@@ -1,7 +1,7 @@
 // http://brucexiejunling.github.io/crossing-the-river/favicon.ico
 // http://1.brucetse.sinaapp.com/favicon.ico
 window.WeiXin = {
-	imgUrl: 'http://brucexiejunling.github.io/crossing-the-river/favicon.ico',
+	imgUrl: 'http://1.brucetse.sinaapp.com/favicon.ico',
 	lineLink: location.href,
 	shareTitle: "[Banana版小黄人过河]重磅来袭! 更有趣更刺激! 原谅我不羁放纵爱自虐~",
 	appid: ''
