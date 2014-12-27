@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
-    <title>小黄人过河</title>
+    <title>Banana版小黄人过河</title>
     <link rel="stylesheet" type="text/css" href="dist/style.css">
     <link rel="shortcut icon" href="favicon" type="image/x-icon">
     <link rel="bookmark" href="favicon.ico" type="image/x-icon">
@@ -13,10 +13,23 @@
     <script type="text/javascript" src="dist/main.js"></script>
   </head>
   <body>
+    <div id="instruction">
+      <ul>
+        <li>* 按住屏幕使桥变长, 松开手指开始搭桥</li>
+        <li>* 桥击中右边河岸的小红点, +1分</li>
+        <li>* 轻点屏幕让小黄人钻到桥底, 再点则回到桥面</li>
+        <li>* 收集一定数量的香蕉, 可使用一次技能</li>
+        <li>P.S. 虐己不如虐人, 快叫上小伙伴一起玩吧!</li>
+      </ul>
+      <div id="confirm">我知道啦</div>
+    </div>
+    <img id="big-banana" src="images/big-banana.png">
+    </div>
     <div id="mask">
       <img id="share-tips" src="images/share_tips.png">
       <div id="share-text"></div>
       <div id="return-wrapper"><div id="return">返 回</div></div>
     </div>
+    <div id="bonus">+1</div>
   </body>
 </html>

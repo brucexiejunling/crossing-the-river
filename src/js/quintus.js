@@ -407,13 +407,19 @@ var Quintus = function(opts) {
 
   // Loader for  Audio
   Q.loadAssetAudio = function(key,src,callback,errorCallback) {
+    var baseName = Q._removeExtension(src)
     if(!document.createElement("audio").play || !Q.options.sound) {
-      callback(key,null);
+      callback(baseName,null);
       return;
     }
 
+    if(!Q.assets[baseName]) {
+      Q.assets[baseName] = {}
+    } else {
+      callback(baseName, Q.assets[baseName])
+      return
+    }
     var snd = new Audio(),
-        baseName = Q._removeExtension(src),
         extension = null,
         filename = null;
 
@@ -427,7 +433,7 @@ var Quintus = function(opts) {
 
     // No supported audio = trigger ok callback anyway
     if(!extension) {
-      callback(key,null);
+      callback(baseName,null);
       return;
     }
 
@@ -435,7 +441,7 @@ var Quintus = function(opts) {
     // call the callback immediately
     $(snd).on('error',errorCallback);
     $(snd).on('canplaythrough',function() { 
-      callback(key,snd); 
+      callback(baseName, snd); 
     });
     snd.src = Q.options.audioPath + baseName + "." + extension;
     snd.load();
@@ -510,7 +516,6 @@ var Quintus = function(opts) {
     // each time an asset is successfully loadded
     var loadedCallback = function(key,obj) {
       if(errors) return;
-
       // Add the object to our asset list
       Q.assets[key] = obj;
 

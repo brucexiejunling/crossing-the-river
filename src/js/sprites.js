@@ -7,30 +7,30 @@ Quintus.Sprites = function(Q) {
         asset: asset,
         w: Q.asset(asset).width,
         h: Q.asset(asset).height,
-        tilew: 40,
-        tileh: 55,
+        sw: 40,
+        sh: 55,
         sx: 0,
         sy: 0
         },options);
       this.cols = this.cols || 
-                  Math.floor(this.w / this.tilew);
+                  Math.floor(this.w / this.sw);
     },
 
     fx: function(frame) {
-      return (frame % this.cols) * this.tilew + this.sx;
+      return (frame % this.cols) * this.sw + this.sx;
     },
 
     fy: function(frame) {
-      return Math.floor(frame / this.cols) * this.tileh + this.sy;
+      return Math.floor(frame / this.cols) * this.sh + this.sy;
     },
 
     draw: function(ctx, x, y, frame) {
       if(!ctx) { ctx = Q.ctx; }
       ctx.drawImage(Q.asset(this.asset),
                     this.fx(frame),this.fy(frame),
-                    this.tilew, this.tileh,
+                    this.sw, this.sh,
                     Math.floor(x),Math.floor(y),
-                    this.tilew * 0.5, this.tileh * 0.5);
+                    this.dw, this.dh);
 
     }
 
@@ -74,8 +74,8 @@ Quintus.Sprites = function(Q) {
           this.p.w = this.p.w || this.asset().width;
           this.p.h = this.p.h || this.asset().height;
         } else if(this.sheet()) {
-          this.p.w = this.p.w || this.sheet().tilew;
-          this.p.h = this.p.h || this.sheet().tileh;
+          this.p.w = this.p.w || this.sheet().dw;
+          this.p.h = this.p.h || this.sheet().dh;
         }
       }
       this.p.id = this.p.id || _.uniqueId();
